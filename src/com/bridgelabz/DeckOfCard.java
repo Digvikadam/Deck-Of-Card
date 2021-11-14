@@ -1,27 +1,46 @@
 package com.bridgelabz;
 
-public class DeckOfCard {
-	 //Deck of Cards program
+import java.util.Random;
+
+public class DeckOfCards {
+	static String[] SUITS = {"Clubs", "Diamonds", "Hearts", "Spades"};
+	static String[] RANKS = {"2", "3", "4", "5", "6", "7", "8", "9", "10","Jack", "Queen", "King", "Ace"};
+	static String[][] deck = new String[SUITS.length][RANKS.length];
 	public static void main(String[] args) {
-		// Initialising the suits ,rank,cardsCollection
-		String[][] cardsCollection = new String[4][13];
-		String[] suits = { "Clubs", "Diamonds", "Hearts", "Spades" };
-		String[] ranks = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace" };
-		// creating object to access createcard()
-		DeckOfCard deckofcard = new DeckOfCard();
-		deckofcard.createCards(suits, ranks, cardsCollection);
+
+		cardsCreation();  // calling cardsCreation method to Create 52 deck of cards
+		shuffle();        // calling shuffle method to shuffle the cards 
+		distribute();     // calling distribute method to distribute 9 cards to 4 persons
 	}
-	//Create all cards and storing values in Array
-	public void createCards(String[] suit, String[] ranks, String[][] cardsCollection) {
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 13; j++) {
-				cardsCollection[i][j] = (suit[i] + "-" + ranks[j]);
+	public static void cardsCreation() {               //creating 52 deck of cards using suits and  ranks
+		for(int i = 0; i< SUITS.length ; i++) {
 
-			}
-
+			for(int j = 0; j< RANKS.length ; j++) {
+				deck[i][j] = SUITS[i] + RANKS[j];
+			}		
 		}
-
 	}
+	public static void shuffle() {                  // shuffling the cards
+		Random random = new Random();
+		for(int i = 0; i< SUITS.length ; i++) {
 
+			for(int j = 0; j< RANKS.length ; j++) {
+				int m = random.nextInt(i + 1);
+				int n = random.nextInt(j + 1);
+				String temp = deck[i][j];
+				deck[i][j] = deck[m][n];
+				deck[m][n] = temp;
+			}		
+		}
+	}
+	public static void distribute() {               // distributing the cards to peoples
+
+		for(int i = 0; i< SUITS.length ; i++) {
+			System.out.println("");
+			System.out.println("Cards recieved by player "+(i+1)+" are");
+			for(int j = 0; j< 9 ; j++) {
+				System.out.println("   "+deck[i][j]) ;
+			}		
+		}
+	}
 }
-
